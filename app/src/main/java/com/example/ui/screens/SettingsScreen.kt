@@ -50,13 +50,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.BuildConfig
 import com.example.ui.MainViewModel
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun SettingsScreen(
@@ -86,22 +86,22 @@ fun SettingsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Cloud,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "OPENCODE ZEN API & FREE MODELS",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
@@ -114,18 +114,18 @@ fun SettingsScreen(
                             apiKeyInput = it
                             viewModel.updateOpenCodeZenApiKey(it)
                         },
-                        label = { Text("OpenCode Zen API Key", color = JarvisTextSecondary, fontSize = 12.sp) },
-                        placeholder = { Text("e.g. zen_free_open_key_...", color = JarvisTextSecondary.copy(alpha = 0.5f)) },
+                        label = { Text("OpenCode Zen API Key", color = MakimaTextSecondary, fontSize = 12.sp) },
+                        placeholder = { Text("e.g. zen_free_open_key_...", color = MakimaTextSecondary.copy(alpha = 0.5f)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = JarvisCyan,
-                            unfocusedBorderColor = JarvisBorderGlow,
-                            focusedTextColor = JarvisTextPrimary,
-                            unfocusedTextColor = JarvisTextPrimary,
-                            focusedContainerColor = JarvisSurfaceElevated,
-                            unfocusedContainerColor = JarvisSurfaceElevated
+                            focusedBorderColor = MakimaCrimson,
+                            unfocusedBorderColor = MakimaBorderGlow,
+                            focusedTextColor = MakimaTextPrimary,
+                            unfocusedTextColor = MakimaTextPrimary,
+                            focusedContainerColor = MakimaSurfaceElevated,
+                            unfocusedContainerColor = MakimaSurfaceElevated
                         )
                     )
 
@@ -137,17 +137,17 @@ fun SettingsScreen(
                             baseUrlInput = it
                             viewModel.updateOpenCodeZenBaseUrl(it)
                         },
-                        label = { Text("OpenCode Zen Base URL", color = JarvisTextSecondary, fontSize = 12.sp) },
+                        label = { Text("OpenCode Zen Base URL", color = MakimaTextSecondary, fontSize = 12.sp) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = JarvisCyan,
-                            unfocusedBorderColor = JarvisBorderGlow,
-                            focusedTextColor = JarvisTextPrimary,
-                            unfocusedTextColor = JarvisTextPrimary,
-                            focusedContainerColor = JarvisSurfaceElevated,
-                            unfocusedContainerColor = JarvisSurfaceElevated
+                            focusedBorderColor = MakimaCrimson,
+                            unfocusedBorderColor = MakimaBorderGlow,
+                            focusedTextColor = MakimaTextPrimary,
+                            unfocusedTextColor = MakimaTextPrimary,
+                            focusedContainerColor = MakimaSurfaceElevated,
+                            unfocusedContainerColor = MakimaSurfaceElevated
                         )
                     )
 
@@ -164,21 +164,21 @@ fun SettingsScreen(
                                 connectionTestedMsg = "Connected to OpenCode Zen API endpoint successfully!"
                                 isTestingConnection = false
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = JarvisCyan),
+                            colors = ButtonDefaults.buttonColors(containerColor = MakimaCrimson),
                             shape = RoundedCornerShape(10.dp)
                         ) {
-                            Text("Test API Connection", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                            Text("Test API Connection", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         }
 
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(JarvisStatusGreen.copy(alpha = 0.2f))
+                                .background(MakimaStatusGreen.copy(alpha = 0.2f))
                                 .padding(horizontal = 10.dp, vertical = 6.dp)
                         ) {
                             Text(
                                 text = "FREE TIERS ACTIVE",
-                                color = JarvisStatusGreen,
+                                color = MakimaStatusGreen,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -191,11 +191,11 @@ fun SettingsScreen(
                             Icon(
                                 imageVector = Icons.Default.CheckCircle,
                                 contentDescription = null,
-                                tint = JarvisStatusGreen,
+                                tint = MakimaStatusGreen,
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text(text = msg, color = JarvisStatusGreen, fontSize = 12.sp)
+                            Text(text = msg, color = MakimaStatusGreen, fontSize = 12.sp)
                         }
                     }
                 }
@@ -207,22 +207,22 @@ fun SettingsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Psychology,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "AI REASONING ENGINE MODEL",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
@@ -316,22 +316,22 @@ fun SettingsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Key,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "SECRETS & API KEYS",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
@@ -343,16 +343,16 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "GEMINI_API_KEY", color = JarvisTextPrimary, fontSize = 13.sp)
+                        Text(text = "GEMINI_API_KEY", color = MakimaTextPrimary, fontSize = 13.sp)
                         Box(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(if (hasGeminiApiKey) JarvisStatusGreen.copy(alpha = 0.2f) else JarvisSurfaceElevated)
+                                .background(if (hasGeminiApiKey) MakimaStatusGreen.copy(alpha = 0.2f) else MakimaSurfaceElevated)
                                 .padding(horizontal = 8.dp, vertical = 4.dp)
                         ) {
                             Text(
                                 text = if (hasGeminiApiKey) "Active (Configured)" else "Fallback Mode",
-                                color = if (hasGeminiApiKey) JarvisStatusGreen else JarvisCyan,
+                                color = if (hasGeminiApiKey) MakimaStatusGreen else MakimaCrimson,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
                             )
@@ -363,7 +363,7 @@ fun SettingsScreen(
 
                     Text(
                         text = "Configured via AI Studio Secrets Panel. Embedded securely into BuildConfig.",
-                        color = JarvisTextSecondary,
+                        color = MakimaTextSecondary,
                         fontSize = 11.sp
                     )
                 }
@@ -375,22 +375,22 @@ fun SettingsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "GESTURE LATENCY & SPEED",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
@@ -401,8 +401,8 @@ fun SettingsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "Step Latency Delay", color = JarvisTextPrimary, fontSize = 13.sp)
-                        Text(text = "${gestureDelay.toInt()} ms", color = JarvisCyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        Text(text = "Step Latency Delay", color = MakimaTextPrimary, fontSize = 13.sp)
+                        Text(text = "${gestureDelay.toInt()} ms", color = MakimaCrimson, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     }
 
                     Slider(
@@ -410,9 +410,9 @@ fun SettingsScreen(
                         onValueChange = { gestureDelay = it },
                         valueRange = 300f..3000f,
                         colors = SliderDefaults.colors(
-                            thumbColor = JarvisCyan,
-                            activeTrackColor = JarvisCyan,
-                            inactiveTrackColor = JarvisSurfaceElevated
+                            thumbColor = MakimaCrimson,
+                            activeTrackColor = MakimaCrimson,
+                            inactiveTrackColor = MakimaSurfaceElevated
                         )
                     )
                 }
@@ -433,21 +433,21 @@ private fun ModelOptionRow(
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
             .clickable { onSelect() }
-            .background(if (isSelected) JarvisCyan.copy(alpha = 0.15f) else JarvisSurfaceElevated)
-            .border(1.dp, if (isSelected) JarvisCyan else Color.Transparent, RoundedCornerShape(12.dp))
+            .background(if (isSelected) MakimaCrimson.copy(alpha = 0.15f) else MakimaSurfaceElevated)
+            .border(1.dp, if (isSelected) MakimaCrimson else Color.Transparent, RoundedCornerShape(12.dp))
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = title, fontWeight = FontWeight.Bold, color = if (isSelected) JarvisCyan else JarvisTextPrimary, fontSize = 13.sp)
-            Text(text = subtitle, color = JarvisTextSecondary, fontSize = 11.sp)
+            Text(text = title, fontWeight = FontWeight.Bold, color = if (isSelected) MakimaCrimson else MakimaTextPrimary, fontSize = 13.sp)
+            Text(text = subtitle, color = MakimaTextSecondary, fontSize = 11.sp)
         }
 
         Icon(
             imageVector = if (isSelected) Icons.Default.RadioButtonChecked else Icons.Default.RadioButtonUnchecked,
             contentDescription = null,
-            tint = if (isSelected) JarvisCyan else JarvisTextSecondary,
+            tint = if (isSelected) MakimaCrimson else MakimaTextSecondary,
             modifier = Modifier.size(20.dp)
         )
     }

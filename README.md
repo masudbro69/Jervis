@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="app/src/main/res/drawable/jarvis_app_icon_1786092709989.jpg" alt="JARVIS Agent OS" width="128" height="128" style="border-radius: 24px;" />
+  <img src="app/src/main/res/drawable/jarvis_app_icon_1786092709989.jpg" alt="Makima Agent OS" width="128" height="128" style="border-radius: 24px;" />
 </p>
 
-<h1 align="center">JARVIS Agent OS</h1>
+<h1 align="center">MAKIMA Agent OS</h1>
 
 <p align="center">
   <strong>Autonomous Android AI Agent — Multi-Agent Architecture with Vision, Reasoning, and Accessibility Automation</strong>
@@ -29,13 +29,13 @@
 
 ## Overview
 
-JARVIS Agent OS is an autonomous Android agent that uses natural language commands to automate complex multi-app workflows. Built on a **multi-agent architecture**, it combines AI-powered planning, computer vision, reasoning, and Android accessibility services to execute tasks across apps — from content creation pipelines to web scraping and media management.
+Makima Agent OS is an autonomous Android agent that uses natural language commands to automate complex multi-app workflows. Built on a **multi-agent architecture**, it combines AI-powered planning, computer vision, reasoning, and Android accessibility services to execute tasks across apps — from content creation pipelines to web scraping and media management.
 
-Simply tell JARVIS what you want to do in plain language, and it will decompose your request into executable steps, observe the screen, reason about the next action, and carry it out automatically.
+Simply tell Makima what you want to do in plain language, and it will decompose your request into executable steps, observe the screen, reason about the next action, and carry it out automatically.
 
 ## Features
 
-- **Natural Language Command Interface** — Describe tasks in plain English; JARVIS plans and executes them autonomously
+- **Natural Language Command Interface** — Describe tasks in plain English; Makima plans and executes them autonomously
 - **Multi-Agent Pipeline** — Specialized agents for planning, vision, reasoning, accessibility, and memory working in concert
 - **Gemini AI Integration** — Powered by Google Gemini for intelligent task decomposition and dynamic workflow generation
 - **Accessibility Automation** — Full Android Accessibility API support: taps, swipes, scrolls, text input, and gesture dispatch
@@ -50,7 +50,7 @@ Simply tell JARVIS what you want to do in plain language, and it will decompose 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    JARVIS Agent OS                       │
+│                    Makima Agent OS                       │
 ├─────────────────────────────────────────────────────────┤
 │  UI Layer (Jetpack Compose + Material 3)                │
 │  ┌──────────┬──────────┬──────────┬─────────┐           │
@@ -145,11 +145,11 @@ Simply tell JARVIS what you want to do in plain language, and it will decompose 
    - *"Download a trending Rednote video, translate it to English, and upload to YouTube Shorts"*
    - *"Organize my gallery photos by category"*
    - *"Scrape the latest news from Chrome and summarize it"*
-4. Watch JARVIS plan, reason, and execute each step in real time
+4. Watch Makima plan, reason, and execute each step in real time
 
 ## Plugins
 
-JARVIS ships with 10 pre-configured automation plugins:
+Makima ships with 10 pre-configured automation plugins:
 
 | Plugin | Category | Capabilities |
 |--------|----------|-------------|
@@ -204,7 +204,7 @@ app/src/main/java/com/example/
 │       └── AgentRepository.kt  # Data repository
 ├── ui/
 │   ├── components/             # Reusable Compose components
-│   │   ├── JarvisHeader.kt
+│   │   ├── MakimaHeader.kt
 │   │   ├── FloatingAssistantOverlay.kt
 │   │   ├── ScreenPreviewCard.kt
 │   │   └── LogItemView.kt

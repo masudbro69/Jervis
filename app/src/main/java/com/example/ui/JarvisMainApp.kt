@@ -45,11 +45,11 @@ import com.example.ui.screens.MemoryScreen
 import com.example.ui.screens.PluginsScreen
 import com.example.ui.screens.SettingsScreen
 import com.example.ui.screens.WorkflowsScreen
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisObsidianDark
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaObsidianDark
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 data class NavTab(
     val title: String,
@@ -78,7 +78,7 @@ fun JarvisMainApp(
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        containerColor = JarvisObsidianDark,
+        containerColor = MakimaObsidianDark,
         topBar = {
             JarvisHeader(
                 executionState = executionState,
@@ -91,8 +91,8 @@ fun JarvisMainApp(
         },
         bottomBar = {
             NavigationBar(
-                containerColor = JarvisSurfaceDark,
-                contentColor = JarvisTextPrimary,
+                containerColor = MakimaSurfaceDark,
+                contentColor = MakimaTextPrimary,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 tabs.forEachIndexed { index, tab ->
@@ -113,11 +113,11 @@ fun JarvisMainApp(
                             )
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.Black,
-                            selectedTextColor = JarvisCyan,
-                            indicatorColor = JarvisCyan,
-                            unselectedIconColor = JarvisTextSecondary,
-                            unselectedTextColor = JarvisTextSecondary
+                            selectedIconColor = Color.White,
+                            selectedTextColor = MakimaCrimson,
+                            indicatorColor = MakimaCrimson,
+                            unselectedIconColor = MakimaTextSecondary,
+                            unselectedTextColor = MakimaTextSecondary
                         ),
                         modifier = Modifier.testTag(tab.tag)
                     )
@@ -129,7 +129,7 @@ fun JarvisMainApp(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(JarvisObsidianDark)
+                .background(MakimaObsidianDark)
         ) {
             when (selectedTab) {
                 0 -> CommandHubScreen(viewModel = viewModel)

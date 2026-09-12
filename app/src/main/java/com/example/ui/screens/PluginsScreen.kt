@@ -53,13 +53,13 @@ import androidx.compose.ui.unit.sp
 import com.example.agent.JarvisAccessibilityService
 import com.example.agent.models.PluginInfo
 import com.example.ui.MainViewModel
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun PluginsScreen(
@@ -81,8 +81,8 @@ fun PluginsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -92,21 +92,21 @@ fun PluginsScreen(
                         Icon(
                             imageVector = Icons.Default.PhoneAndroid,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(22.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "FULL DEVICE AUTONOMOUS AGENT CONTROL",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
 
                     Text(
-                        text = "To let JARVIS act as your 100% personal AI phone assistant, grant system permissions below. JARVIS can read screens, tap, type, swipe, and execute commands across any Android app automatically.",
-                        color = JarvisTextSecondary,
+                        text = "To let Makima act as your 100% personal AI phone assistant, grant system permissions below. Makima can read screens, tap, type, swipe, and execute commands across any Android app automatically.",
+                        color = MakimaTextSecondary,
                         fontSize = 12.sp,
                         lineHeight = 16.sp
                     )
@@ -129,7 +129,7 @@ fun PluginsScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     PermissionRowItem(
-                        title = "Draw Over Other Apps (Floating JARVIS Overlay HUD)",
+                        title = "Draw Over Other Apps (Floating Makima Overlay HUD)",
                         status = "Active & Granted",
                         isGranted = true,
                         onClick = {
@@ -165,7 +165,7 @@ fun PluginsScreen(
                 text = "INSTALLED MODULAR PLUGINS (${plugins.size})",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = JarvisTextSecondary,
+                color = MakimaTextSecondary,
                 letterSpacing = 1.sp
             )
         }
@@ -191,7 +191,7 @@ private fun PermissionRowItem(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(JarvisSurfaceElevated)
+            .background(MakimaSurfaceElevated)
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -202,18 +202,18 @@ private fun PermissionRowItem(
                 text = title,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = JarvisTextPrimary
+                color = MakimaTextPrimary
             )
             Text(
                 text = status,
                 fontSize = 11.sp,
-                color = if (isGranted) JarvisStatusGreen else Color(0xFFFFB74D)
+                color = if (isGranted) MakimaStatusGreen else Color(0xFFFFB74D)
             )
         }
         Icon(
             imageVector = if (isGranted) Icons.Default.CheckCircle else Icons.Default.Launch,
             contentDescription = null,
-            tint = if (isGranted) JarvisStatusGreen else JarvisCyan,
+            tint = if (isGranted) MakimaStatusGreen else MakimaCrimson,
             modifier = Modifier.size(18.dp)
         )
     }
@@ -229,8 +229,8 @@ private fun PluginItemCard(
             .fillMaxWidth()
             .testTag("plugin_card_${plugin.id}"),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -243,13 +243,13 @@ private fun PluginItemCard(
                         modifier = Modifier
                             .size(36.dp)
                             .clip(CircleShape)
-                            .background(JarvisCyan.copy(alpha = 0.15f)),
+                            .background(MakimaCrimson.copy(alpha = 0.15f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.Extension,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                     }
@@ -258,12 +258,12 @@ private fun PluginItemCard(
                         Text(
                             text = plugin.name,
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                         Text(
                             text = plugin.category,
-                            color = JarvisTextSecondary,
+                            color = MakimaTextSecondary,
                             fontSize = 11.sp
                         )
                     }
@@ -273,10 +273,10 @@ private fun PluginItemCard(
                     checked = plugin.isEnabled,
                     onCheckedChange = { onToggle() },
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.Black,
-                        checkedTrackColor = JarvisCyan,
-                        uncheckedThumbColor = JarvisTextSecondary,
-                        uncheckedTrackColor = JarvisSurfaceElevated
+                        checkedThumbColor = Color.White,
+                        checkedTrackColor = MakimaCrimson,
+                        uncheckedThumbColor = MakimaTextSecondary,
+                        uncheckedTrackColor = MakimaSurfaceElevated
                     )
                 )
             }
@@ -286,7 +286,7 @@ private fun PluginItemCard(
             Text(
                 text = plugin.description,
                 fontSize = 12.sp,
-                color = JarvisTextSecondary
+                color = MakimaTextSecondary
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -296,13 +296,13 @@ private fun PluginItemCard(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(6.dp))
-                            .background(JarvisSurfaceElevated)
+                            .background(MakimaSurfaceElevated)
                             .padding(horizontal = 6.dp, vertical = 2.dp)
                     ) {
                         Text(
                             text = action.name,
                             fontSize = 10.sp,
-                            color = JarvisCyan
+                            color = MakimaCrimson
                         )
                     }
                 }

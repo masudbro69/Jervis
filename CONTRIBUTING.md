@@ -1,6 +1,6 @@
-# Contributing to JARVIS Agent OS
+# Contributing to Makima Agent OS
 
-Thank you for your interest in contributing to JARVIS Agent OS! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to Makima Agent OS! This document provides guidelines and instructions for contributing.
 
 ## Code of Conduct
 

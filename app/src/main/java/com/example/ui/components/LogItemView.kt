@@ -19,11 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisStatusOrange
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaStatusOrange
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun LogItemView(
@@ -31,10 +31,10 @@ fun LogItemView(
     modifier: Modifier = Modifier
 ) {
     val indicatorColor = when {
-        logMessage.startsWith("✅") -> JarvisStatusGreen
-        logMessage.startsWith("🚀") || logMessage.startsWith("⚡") -> JarvisCyan
-        logMessage.startsWith("📍") || logMessage.startsWith("🧠") -> JarvisStatusOrange
-        else -> JarvisTextSecondary
+        logMessage.startsWith("✅") -> MakimaStatusGreen
+        logMessage.startsWith("🚀") || logMessage.startsWith("⚡") -> MakimaCrimson
+        logMessage.startsWith("📍") || logMessage.startsWith("🧠") -> MakimaStatusOrange
+        else -> MakimaTextSecondary
     }
 
     Row(
@@ -55,7 +55,7 @@ fun LogItemView(
         Text(
             text = logMessage,
             fontSize = 12.sp,
-            color = JarvisTextPrimary,
+            color = MakimaTextPrimary,
             fontFamily = FontFamily.Monospace,
             lineHeight = 16.sp
         )

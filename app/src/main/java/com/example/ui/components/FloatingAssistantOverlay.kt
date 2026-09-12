@@ -42,14 +42,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.agent.models.ExecutionState
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisElectricBlue
-import com.example.ui.theme.JarvisStatusOrange
-import com.example.ui.theme.JarvisStatusRed
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaDarkRed
+import com.example.ui.theme.MakimaStatusOrange
+import com.example.ui.theme.MakimaStatusRed
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun FloatingAssistantOverlay(
@@ -68,8 +68,8 @@ fun FloatingAssistantOverlay(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(24.dp))
-                .background(JarvisSurfaceDark.copy(alpha = 0.95f))
-                .border(1.dp, JarvisCyan, RoundedCornerShape(24.dp))
+                .background(MakimaSurfaceDark.copy(alpha = 0.95f))
+                .border(1.dp, MakimaCrimson, RoundedCornerShape(24.dp))
                 .padding(14.dp)
         ) {
             Column {
@@ -83,21 +83,21 @@ fun FloatingAssistantOverlay(
                             modifier = Modifier
                                 .size(28.dp)
                                 .clip(CircleShape)
-                                .background(JarvisCyan),
+                                .background(MakimaCrimson),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.AutoAwesome,
                                 contentDescription = null,
-                                tint = Color.Black,
+                                tint = Color.White,
                                 modifier = Modifier.size(16.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "JARVIS Express Command",
+                            text = "MAKIMA Express Command",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 13.sp
                         )
                     }
@@ -111,7 +111,7 @@ fun FloatingAssistantOverlay(
                                 Icon(
                                     imageVector = Icons.Default.Pause,
                                     contentDescription = "Pause",
-                                    tint = JarvisStatusOrange
+                                    tint = MakimaStatusOrange
                                 )
                             }
                         } else if (executionState == ExecutionState.PAUSED) {
@@ -122,7 +122,7 @@ fun FloatingAssistantOverlay(
                                 Icon(
                                     imageVector = Icons.Default.PlayArrow,
                                     contentDescription = "Resume",
-                                    tint = JarvisCyan
+                                    tint = MakimaCrimson
                                 )
                             }
                         }
@@ -135,7 +135,7 @@ fun FloatingAssistantOverlay(
                                 Icon(
                                     imageVector = Icons.Default.Stop,
                                     contentDescription = "Stop",
-                                    tint = JarvisStatusRed
+                                    tint = MakimaStatusRed
                                 )
                             }
                         }
@@ -158,14 +158,14 @@ fun FloatingAssistantOverlay(
                             Text(
                                 "e.g. Rednote video to Hindi YouTube Short...",
                                 fontSize = 12.sp,
-                                color = JarvisTextSecondary
+                                color = MakimaTextSecondary
                             )
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = JarvisCyan,
-                            unfocusedBorderColor = JarvisBorderGlow,
-                            focusedTextColor = JarvisTextPrimary,
-                            unfocusedTextColor = JarvisTextPrimary
+                            focusedBorderColor = MakimaCrimson,
+                            unfocusedBorderColor = MakimaBorderGlow,
+                            focusedTextColor = MakimaTextPrimary,
+                            unfocusedTextColor = MakimaTextPrimary
                         ),
                         singleLine = true,
                         shape = RoundedCornerShape(14.dp)
@@ -183,13 +183,13 @@ fun FloatingAssistantOverlay(
                         modifier = Modifier
                             .size(48.dp)
                             .clip(RoundedCornerShape(14.dp))
-                            .background(JarvisCyan)
+                            .background(MakimaCrimson)
                             .testTag("express_prompt_send_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.Send,
                             contentDescription = "Run Command",
-                            tint = Color.Black
+                            tint = Color.White
                         )
                     }
                 }

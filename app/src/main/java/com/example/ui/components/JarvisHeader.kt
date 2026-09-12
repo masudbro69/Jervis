@@ -36,13 +36,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.agent.models.ExecutionState
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisStatusOrange
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaGold
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaStatusOrange
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun JarvisHeader(
@@ -53,10 +54,10 @@ fun JarvisHeader(
 ) {
     val statusColor by animateColorAsState(
         targetValue = when (executionState) {
-            ExecutionState.EXECUTING, ExecutionState.PLANNING, ExecutionState.REASONING -> JarvisCyan
-            ExecutionState.COMPLETED -> JarvisStatusGreen
-            ExecutionState.PAUSED -> JarvisStatusOrange
-            else -> JarvisTextSecondary
+            ExecutionState.EXECUTING, ExecutionState.PLANNING, ExecutionState.REASONING -> MakimaCrimson
+            ExecutionState.COMPLETED -> MakimaStatusGreen
+            ExecutionState.PAUSED -> MakimaStatusOrange
+            else -> MakimaTextSecondary
         },
         label = "statusColor"
     )
@@ -65,8 +66,8 @@ fun JarvisHeader(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(JarvisSurfaceDark)
-            .border(1.dp, JarvisBorderGlow, RoundedCornerShape(20.dp))
+            .background(MakimaSurfaceDark)
+            .border(1.dp, MakimaBorderGlow, RoundedCornerShape(20.dp))
             .padding(16.dp)
     ) {
         Column {
@@ -80,21 +81,21 @@ fun JarvisHeader(
                         modifier = Modifier
                             .size(38.dp)
                             .clip(CircleShape)
-                            .background(JarvisCyan.copy(alpha = 0.15f)),
+                            .background(MakimaCrimson.copy(alpha = 0.15f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.AutoAwesome,
-                            contentDescription = "JARVIS Core",
-                            tint = JarvisCyan,
+                            contentDescription = "Makima Core",
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(22.dp)
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "JARVIS AI AGENT OS",
-                            color = JarvisTextPrimary,
+                            text = "MAKIMA AGENT OS",
+                            color = MakimaTextPrimary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp,
                             letterSpacing = 1.sp
@@ -121,8 +122,8 @@ fun JarvisHeader(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .background(if (isFloatingHudActive) JarvisCyan.copy(alpha = 0.2f) else MaterialTheme.colorScheme.surfaceVariant)
-                            .border(1.dp, if (isFloatingHudActive) JarvisCyan else JarvisBorderGlow, RoundedCornerShape(12.dp))
+                            .background(if (isFloatingHudActive) MakimaCrimson.copy(alpha = 0.2f) else MaterialTheme.colorScheme.surfaceVariant)
+                            .border(1.dp, if (isFloatingHudActive) MakimaCrimson else MakimaBorderGlow, RoundedCornerShape(12.dp))
                             .padding(horizontal = 8.dp, vertical = 4.dp)
                     ) {
                         IconButton(
@@ -134,7 +135,7 @@ fun JarvisHeader(
                             Icon(
                                 imageVector = if (isFloatingHudActive) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
                                 contentDescription = "Toggle Floating HUD",
-                                tint = if (isFloatingHudActive) JarvisCyan else JarvisTextSecondary
+                                tint = if (isFloatingHudActive) MakimaCrimson else MakimaTextSecondary
                             )
                         }
                     }
@@ -172,20 +173,20 @@ private fun HeaderPill(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = JarvisCyan,
+            tint = MakimaCrimson,
             modifier = Modifier.size(14.dp)
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = "$label: ",
             fontSize = 11.sp,
-            color = JarvisTextSecondary
+            color = MakimaTextSecondary
         )
         Text(
             text = value,
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
-            color = JarvisTextPrimary
+            color = MakimaTextPrimary
         )
     }
 }

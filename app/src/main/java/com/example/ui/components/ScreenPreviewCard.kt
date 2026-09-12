@@ -42,14 +42,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.agent.models.ScreenFrame
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisElectricBlue
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaDarkRed
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun ScreenPreviewCard(
@@ -72,8 +72,8 @@ fun ScreenPreviewCard(
             .fillMaxWidth()
             .testTag("screen_preview_card"),
         shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -85,14 +85,14 @@ fun ScreenPreviewCard(
                     Icon(
                         imageVector = Icons.Default.PhoneAndroid,
                         contentDescription = "Device View",
-                        tint = JarvisCyan,
+                        tint = MakimaCrimson,
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "LIVE SCREEN & VISION AI",
                         fontWeight = FontWeight.Bold,
-                        color = JarvisTextPrimary,
+                        color = MakimaTextPrimary,
                         fontSize = 14.sp
                     )
                 }
@@ -102,12 +102,12 @@ fun ScreenPreviewCard(
                         modifier = Modifier
                             .size(10.dp)
                             .clip(CircleShape)
-                            .background(JarvisStatusGreen.copy(alpha = alphaPulse))
+                            .background(MakimaStatusGreen.copy(alpha = alphaPulse))
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = screenFrame?.appName ?: "Standby",
-                        color = JarvisCyan,
+                        color = MakimaCrimson,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -122,49 +122,42 @@ fun ScreenPreviewCard(
                     .fillMaxWidth()
                     .height(240.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(JarvisSurfaceElevated)
-                    .border(1.dp, JarvisCyan.copy(alpha = 0.3f), RoundedCornerShape(16.dp)),
+                    .background(MakimaSurfaceElevated)
+                    .border(1.dp, MakimaCrimson.copy(alpha = 0.3f), RoundedCornerShape(16.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                // Canvas drawing simulated screen content and green/cyan bounding boxes
                 Canvas(modifier = Modifier.fillMaxSize()) {
                     val width = size.width
                     val height = size.height
 
-                    // Draw dark smartphone screen background
-                    drawRect(color = Color(0xFF0D121F))
+                    drawRect(color = Color(0xFF0D0A12))
 
-                    // Draw app header bar line
                     drawRect(
-                        color = Color(0xFF1E283D),
+                        color = Color(0xFF1E1520),
                         size = androidx.compose.ui.geometry.Size(width, height * 0.18f)
                     )
 
-                    // Draw vision bounding boxes for detected nodes
                     screenFrame?.nodes?.forEachIndexed { index, node ->
                         val left = node.bounds.left / 400f * width
                         val top = node.bounds.top / 700f * height
                         val right = node.bounds.right / 400f * width
                         val bottom = node.bounds.bottom / 700f * height
 
-                        // Bounding Box Rect
                         drawRect(
-                            color = if (index == 1) Color(0xFF00F0FF) else Color(0xFF00E676),
+                            color = if (index == 1) Color(0xFFE63946) else Color(0xFF4ADE80),
                             topLeft = androidx.compose.ui.geometry.Offset(left, top),
                             size = androidx.compose.ui.geometry.Size(right - left, bottom - top),
                             style = Stroke(width = 3f)
                         )
                     }
 
-                    // Simulated Tap Gesture Ripple Effect
                     drawCircle(
-                        color = Color(0xFF00F0FF).copy(alpha = alphaPulse),
+                        color = Color(0xFFE63946).copy(alpha = alphaPulse),
                         center = androidx.compose.ui.geometry.Offset(width * 0.75f, height * 0.65f),
                         radius = 24f * alphaPulse
                     )
                 }
 
-                // Overlay App Name & Node Counter
                 Column(
                     modifier = Modifier
                         .align(Alignment.BottomStart)
@@ -181,7 +174,7 @@ fun ScreenPreviewCard(
                     )
                     Text(
                         text = "UI Nodes Detected: ${screenFrame?.nodes?.size ?: 0}",
-                        color = JarvisCyan,
+                        color = MakimaCrimson,
                         fontSize = 11.sp
                     )
                 }
@@ -191,7 +184,7 @@ fun ScreenPreviewCard(
 
             Text(
                 text = screenFrame?.statusText ?: "Vision OCR Active • Observing UI Hierarchy",
-                color = JarvisTextSecondary,
+                color = MakimaTextSecondary,
                 fontSize = 12.sp
             )
         }

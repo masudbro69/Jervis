@@ -4,19 +4,21 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
-private val JarvisDarkColorScheme = darkColorScheme(
-    primary = JarvisCyan,
-    onPrimary = JarvisObsidianDark,
-    primaryContainer = JarvisElectricBlue,
-    secondary = JarvisElectricBlue,
-    onSecondary = JarvisTextPrimary,
-    background = JarvisObsidianDark,
-    onBackground = JarvisTextPrimary,
-    surface = JarvisSurfaceDark,
-    onSurface = JarvisTextPrimary,
-    surfaceVariant = JarvisSurfaceElevated,
-    onSurfaceVariant = JarvisTextSecondary,
-    outline = JarvisBorderGlow
+private val MakimaDarkColorScheme = darkColorScheme(
+    primary = MakimaCrimson,
+    onPrimary = MakimaTextPrimary,
+    primaryContainer = MakimaDarkRed,
+    secondary = MakimaGold,
+    onSecondary = MakimaObsidianDark,
+    background = MakimaObsidianDark,
+    onBackground = MakimaTextPrimary,
+    surface = MakimaSurfaceDark,
+    onSurface = MakimaTextPrimary,
+    surfaceVariant = MakimaSurfaceElevated,
+    onSurfaceVariant = MakimaTextSecondary,
+    outline = MakimaBorderGlow,
+    error = MakimaStatusRed,
+    tertiary = MakimaRose
 )
 
 @Composable
@@ -26,9 +28,8 @@ fun MyApplicationTheme(
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = JarvisDarkColorScheme,
+        colorScheme = MakimaDarkColorScheme,
         typography = Typography,
         content = content
     )
 }
-

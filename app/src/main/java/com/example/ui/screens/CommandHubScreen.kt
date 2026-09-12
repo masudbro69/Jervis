@@ -54,15 +54,16 @@ import com.example.agent.models.ExecutionState
 import com.example.agent.models.WorkflowStep
 import com.example.ui.MainViewModel
 import com.example.ui.components.LogItemView
+import com.example.ui.components.MakimaCharacterPanel
 import com.example.ui.components.ScreenPreviewCard
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisElectricBlue
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaDarkRed
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun CommandHubScreen(
@@ -84,6 +85,11 @@ fun CommandHubScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // 3D Animated Makima Character Panel
+        item {
+            MakimaCharacterPanel()
+        }
+
         // Express Command Input Card
         item {
             Card(
@@ -91,8 +97,8 @@ fun CommandHubScreen(
                     .fillMaxWidth()
                     .testTag("command_input_card"),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisCyan)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaCrimson)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -102,14 +108,14 @@ fun CommandHubScreen(
                         Icon(
                             imageVector = Icons.Default.AutoAwesome,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "COMMAND AGENT OS",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
@@ -124,14 +130,14 @@ fun CommandHubScreen(
                             Text(
                                 "e.g. Download Rednote video -> Generate Hindi voice -> Add subtitles -> Upload to YouTube",
                                 fontSize = 12.sp,
-                                color = JarvisTextSecondary
+                                color = MakimaTextSecondary
                             )
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = JarvisCyan,
-                            unfocusedBorderColor = JarvisBorderGlow,
-                            focusedTextColor = JarvisTextPrimary,
-                            unfocusedTextColor = JarvisTextPrimary
+                            focusedBorderColor = MakimaCrimson,
+                            unfocusedBorderColor = MakimaBorderGlow,
+                            focusedTextColor = MakimaTextPrimary,
+                            unfocusedTextColor = MakimaTextPrimary
                         ),
                         shape = RoundedCornerShape(16.dp),
                         minLines = 2
@@ -147,7 +153,7 @@ fun CommandHubScreen(
                         Text(
                             text = "One command. Autonomous execution.",
                             fontSize = 11.sp,
-                            color = JarvisTextSecondary
+                            color = MakimaTextSecondary
                         )
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -161,13 +167,13 @@ fun CommandHubScreen(
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .clip(CircleShape)
-                                    .background(if (isListeningVoice) Color.Red else JarvisSurfaceElevated)
-                                    .border(1.dp, if (isListeningVoice) Color.Red else JarvisCyan, CircleShape)
+                                    .background(if (isListeningVoice) Color.Red else MakimaSurfaceElevated)
+                                    .border(1.dp, if (isListeningVoice) Color.Red else MakimaCrimson, CircleShape)
                             ) {
                                 Icon(
                                     imageVector = if (isListeningVoice) Icons.Default.MicOff else Icons.Default.Mic,
                                     contentDescription = "Voice Input",
-                                    tint = if (isListeningVoice) Color.White else JarvisCyan,
+                                    tint = if (isListeningVoice) Color.White else MakimaCrimson,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
@@ -180,7 +186,7 @@ fun CommandHubScreen(
                                 },
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(12.dp))
-                                    .background(JarvisCyan)
+                                    .background(MakimaCrimson)
                                     .padding(horizontal = 16.dp, vertical = 6.dp)
                                     .testTag("run_command_button")
                             ) {
@@ -188,14 +194,14 @@ fun CommandHubScreen(
                                     Icon(
                                         imageVector = Icons.Default.Send,
                                         contentDescription = "Execute",
-                                        tint = Color.Black,
+                                        tint = Color.White,
                                         modifier = Modifier.size(16.dp)
                                     )
                                     Spacer(modifier = Modifier.width(6.dp))
                                     Text(
                                         text = "Execute",
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.Black,
+                                        color = Color.White,
                                         fontSize = 13.sp
                                     )
                                 }
@@ -212,7 +218,7 @@ fun CommandHubScreen(
                 text = "FEATURED PIPELINES",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = JarvisTextSecondary,
+                color = MakimaTextSecondary,
                 letterSpacing = 1.sp
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -248,8 +254,8 @@ fun CommandHubScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                    colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -260,12 +266,12 @@ fun CommandHubScreen(
                             Text(
                                 text = "AUTOMATION PIPELINE (${activeSteps.size} STEPS)",
                                 fontWeight = FontWeight.Bold,
-                                color = JarvisTextPrimary,
+                                color = MakimaTextPrimary,
                                 fontSize = 13.sp
                             )
                             Text(
                                 text = "Step ${currentStepIndex + 1}/${activeSteps.size}",
-                                color = JarvisCyan,
+                                color = MakimaCrimson,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp
                             )
@@ -280,8 +286,8 @@ fun CommandHubScreen(
                                 .fillMaxWidth()
                                 .height(6.dp)
                                 .clip(RoundedCornerShape(3.dp)),
-                            color = JarvisCyan,
-                            trackColor = JarvisSurfaceElevated
+                            color = MakimaCrimson,
+                            trackColor = MakimaSurfaceElevated
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
@@ -300,14 +306,14 @@ fun CommandHubScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = "REAL-TIME EXECUTION LOGS",
                         fontWeight = FontWeight.Bold,
-                        color = JarvisTextPrimary,
+                        color = MakimaTextPrimary,
                         fontSize = 13.sp,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
@@ -315,7 +321,7 @@ fun CommandHubScreen(
                     if (logs.isEmpty()) {
                         Text(
                             text = "Waiting for agent command...",
-                            color = JarvisTextSecondary,
+                            color = MakimaTextSecondary,
                             fontSize = 12.sp
                         )
                     } else {
@@ -341,8 +347,8 @@ private fun QuickCommandCard(
             .fillMaxWidth()
             .clickable { onClick() },
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceElevated),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceElevated),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Row(
             modifier = Modifier.padding(12.dp),
@@ -353,19 +359,19 @@ private fun QuickCommandCard(
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
-                    color = JarvisTextPrimary,
+                    color = MakimaTextPrimary,
                     fontSize = 13.sp
                 )
                 Text(
                     text = subtitle,
-                    color = JarvisTextSecondary,
+                    color = MakimaTextSecondary,
                     fontSize = 11.sp
                 )
             }
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = null,
-                tint = JarvisCyan,
+                tint = MakimaCrimson,
                 modifier = Modifier.size(20.dp)
             )
         }
@@ -379,10 +385,10 @@ private fun PipelineStepRow(step: WorkflowStep) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
-            .background(if (step.isCurrent) JarvisCyan.copy(alpha = 0.15f) else JarvisSurfaceElevated)
+            .background(if (step.isCurrent) MakimaCrimson.copy(alpha = 0.15f) else MakimaSurfaceElevated)
             .border(
                 1.dp,
-                if (step.isCurrent) JarvisCyan else Color.Transparent,
+                if (step.isCurrent) MakimaCrimson else Color.Transparent,
                 RoundedCornerShape(10.dp)
             )
             .padding(10.dp)
@@ -390,7 +396,7 @@ private fun PipelineStepRow(step: WorkflowStep) {
         Icon(
             imageVector = if (step.isCompleted) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
             contentDescription = null,
-            tint = if (step.isCompleted) JarvisStatusGreen else if (step.isCurrent) JarvisCyan else JarvisTextSecondary,
+            tint = if (step.isCompleted) MakimaStatusGreen else if (step.isCurrent) MakimaCrimson else MakimaTextSecondary,
             modifier = Modifier.size(18.dp)
         )
         Spacer(modifier = Modifier.width(10.dp))
@@ -399,12 +405,12 @@ private fun PipelineStepRow(step: WorkflowStep) {
                 text = "${step.stepIndex}. ${step.title}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
-                color = if (step.isCurrent) JarvisCyan else JarvisTextPrimary
+                color = if (step.isCurrent) MakimaCrimson else MakimaTextPrimary
             )
             Text(
                 text = "${step.appName} • ${step.description}",
                 fontSize = 11.sp,
-                color = JarvisTextSecondary
+                color = MakimaTextSecondary
             )
         }
     }

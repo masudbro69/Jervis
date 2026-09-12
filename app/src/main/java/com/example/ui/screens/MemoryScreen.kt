@@ -35,13 +35,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.entities.UIMemoryEntity
 import com.example.ui.MainViewModel
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun MemoryScreen(
@@ -61,8 +61,8 @@ fun MemoryScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
@@ -72,21 +72,21 @@ fun MemoryScreen(
                         Icon(
                             imageVector = Icons.Default.Memory,
                             contentDescription = null,
-                            tint = JarvisCyan,
+                            tint = MakimaCrimson,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "LEARNED MEMORY DATABASE",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                     }
 
                     Text(
-                        text = "JARVIS remembers button locations, UI element bounds, app version layouts, and previous successful execution paths.",
-                        color = JarvisTextSecondary,
+                        text = "Makima remembers button locations, UI element bounds, app version layouts, and previous successful execution paths.",
+                        color = MakimaTextSecondary,
                         fontSize = 12.sp
                     )
 
@@ -109,7 +109,7 @@ fun MemoryScreen(
                 text = "STORED UI NODE MEMORIES",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = JarvisTextSecondary,
+                color = MakimaTextSecondary,
                 letterSpacing = 1.sp
             )
         }
@@ -155,11 +155,11 @@ private fun MetricBox(label: String, value: String) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(JarvisSurfaceElevated)
+            .background(MakimaSurfaceElevated)
             .padding(horizontal = 14.dp, vertical = 10.dp)
     ) {
-        Text(text = value, fontWeight = FontWeight.Bold, color = JarvisCyan, fontSize = 16.sp)
-        Text(text = label, color = JarvisTextSecondary, fontSize = 11.sp)
+        Text(text = value, fontWeight = FontWeight.Bold, color = MakimaCrimson, fontSize = 16.sp)
+        Text(text = label, color = MakimaTextSecondary, fontSize = 11.sp)
     }
 }
 
@@ -168,8 +168,8 @@ private fun MemoryCardItem(memory: UIMemoryEntity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
@@ -180,17 +180,17 @@ private fun MemoryCardItem(memory: UIMemoryEntity) {
                 Text(
                     text = "${memory.appName} (${memory.appPackage})",
                     fontWeight = FontWeight.Bold,
-                    color = JarvisTextPrimary,
+                    color = MakimaTextPrimary,
                     fontSize = 13.sp
                 )
 
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
-                        .background(JarvisStatusGreen.copy(alpha = 0.2f))
+                        .background(MakimaStatusGreen.copy(alpha = 0.2f))
                         .padding(horizontal = 6.dp, vertical = 2.dp)
                 ) {
-                    Text(text = "v${memory.appVersion}", color = JarvisStatusGreen, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "v${memory.appVersion}", color = MakimaStatusGreen, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -199,13 +199,13 @@ private fun MemoryCardItem(memory: UIMemoryEntity) {
             Text(
                 text = "Key: ${memory.elementKey} • Label: \"${memory.textLabel}\"",
                 fontSize = 12.sp,
-                color = JarvisCyan
+                color = MakimaCrimson
             )
 
             Text(
                 text = "Bounds Ratio: ${memory.boundsJson} | Class: ${memory.className}",
                 fontSize = 11.sp,
-                color = JarvisTextSecondary,
+                color = MakimaTextSecondary,
                 fontFamily = FontFamily.Monospace
             )
         }

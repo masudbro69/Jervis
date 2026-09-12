@@ -168,7 +168,7 @@ class PlannerAgent {
             WorkflowStep(
                 stepIndex = 3,
                 title = "AI Summarization",
-                appName = "JARVIS Core",
+                appName = "Makima Core",
                 description = "Summarize scraped content into actionable intelligence.",
                 actionType = ActionType.TRANSLATE_TEXT
             )
@@ -176,14 +176,14 @@ class PlannerAgent {
     }
 
     private suspend fun generateDynamicPlan(userPrompt: String): List<WorkflowStep> {
-        val systemPrompt = "You are JARVIS AI Agent OS Planner. Break down the user prompt into 3 to 5 discrete executable Android automation steps. Return brief clear descriptions."
+        val systemPrompt = "You are Makima AI Agent OS Planner. Break down the user prompt into 3 to 5 discrete executable Android automation steps. Return brief clear descriptions."
         val aiAdvice = GeminiNetwork.askGemini(userPrompt, systemPrompt)
 
         return listOf(
             WorkflowStep(
                 stepIndex = 1,
                 title = "Analyze System Context",
-                appName = "JARVIS Core",
+                appName = "Makima Core",
                 description = "Identify target apps, permissions, and initial UI state.",
                 actionType = ActionType.OPEN_APP
             ),
@@ -197,7 +197,7 @@ class PlannerAgent {
             WorkflowStep(
                 stepIndex = 3,
                 title = "Execute Workflow Action",
-                appName = "JARVIS Core",
+                appName = "Makima Core",
                 description = "Perform required gesture, text input, or media processing.",
                 actionType = ActionType.TYPE_TEXT,
                 inputText = userPrompt

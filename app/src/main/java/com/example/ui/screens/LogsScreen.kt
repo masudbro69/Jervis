@@ -37,14 +37,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.entities.ExecutionLogEntity
 import com.example.ui.MainViewModel
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusGreen
-import com.example.ui.theme.JarvisStatusRed
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaStatusRed
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -66,8 +66,8 @@ fun LogsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Row(
                     modifier = Modifier.padding(16.dp),
@@ -79,20 +79,20 @@ fun LogsScreen(
                             Icon(
                                 imageVector = Icons.Default.History,
                                 contentDescription = null,
-                                tint = JarvisCyan,
+                                tint = MakimaCrimson,
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
                                 text = "TASK HISTORY LOGS",
                                 fontWeight = FontWeight.Bold,
-                                color = JarvisTextPrimary,
+                                color = MakimaTextPrimary,
                                 fontSize = 14.sp
                             )
                         }
                         Text(
                             text = "Permanent audit log of all agent runs and reasoning",
-                            color = JarvisTextSecondary,
+                            color = MakimaTextSecondary,
                             fontSize = 12.sp
                         )
                     }
@@ -102,7 +102,7 @@ fun LogsScreen(
                             Icon(
                                 imageVector = Icons.Default.DeleteSweep,
                                 contentDescription = "Clear History",
-                                tint = JarvisStatusRed
+                                tint = MakimaStatusRed
                             )
                         }
                     }
@@ -120,7 +120,7 @@ fun LogsScreen(
                 ) {
                     Text(
                         text = "No recorded history yet. Run a command from Command Hub!",
-                        color = JarvisTextSecondary,
+                        color = MakimaTextSecondary,
                         fontSize = 13.sp
                     )
                 }
@@ -141,8 +141,8 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Column(modifier = Modifier.padding(14.dp)) {
             Row(
@@ -153,7 +153,7 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
                 Text(
                     text = log.workflowName,
                     fontWeight = FontWeight.Bold,
-                    color = JarvisTextPrimary,
+                    color = MakimaTextPrimary,
                     fontSize = 14.sp
                 )
 
@@ -161,7 +161,7 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
                     modifier = Modifier
                         .clip(RoundedCornerShape(6.dp))
                         .background(
-                            if (log.status == "COMPLETED") JarvisStatusGreen.copy(alpha = 0.2f) else JarvisStatusRed.copy(
+                            if (log.status == "COMPLETED") MakimaStatusGreen.copy(alpha = 0.2f) else MakimaStatusRed.copy(
                                 alpha = 0.2f
                             )
                         )
@@ -169,7 +169,7 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
                 ) {
                     Text(
                         text = log.status,
-                        color = if (log.status == "COMPLETED") JarvisStatusGreen else JarvisStatusRed,
+                        color = if (log.status == "COMPLETED") MakimaStatusGreen else MakimaStatusRed,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -181,7 +181,7 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
             Text(
                 text = "Command: \"${log.command}\"",
                 fontSize = 12.sp,
-                color = JarvisCyan
+                color = MakimaCrimson
             )
 
             Spacer(modifier = Modifier.height(6.dp))
@@ -193,12 +193,12 @@ private fun LogHistoryCardItem(log: ExecutionLogEntity) {
                 Text(
                     text = "Steps: ${log.completedSteps}/${log.totalSteps} Completed",
                     fontSize = 11.sp,
-                    color = JarvisTextSecondary
+                    color = MakimaTextSecondary
                 )
                 Text(
                     text = "Duration: ${(log.durationMs / 1000f)}s • $dateString",
                     fontSize = 11.sp,
-                    color = JarvisTextSecondary
+                    color = MakimaTextSecondary
                 )
             }
         }

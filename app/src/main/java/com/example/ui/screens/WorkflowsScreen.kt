@@ -46,13 +46,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.local.entities.WorkflowEntity
 import com.example.ui.MainViewModel
-import com.example.ui.theme.JarvisBorderGlow
-import com.example.ui.theme.JarvisCyan
-import com.example.ui.theme.JarvisStatusRed
-import com.example.ui.theme.JarvisSurfaceDark
-import com.example.ui.theme.JarvisSurfaceElevated
-import com.example.ui.theme.JarvisTextPrimary
-import com.example.ui.theme.JarvisTextSecondary
+import com.example.ui.theme.MakimaBorderGlow
+import com.example.ui.theme.MakimaCrimson
+import com.example.ui.theme.MakimaStatusRed
+import com.example.ui.theme.MakimaSurfaceDark
+import com.example.ui.theme.MakimaSurfaceElevated
+import com.example.ui.theme.MakimaTextPrimary
+import com.example.ui.theme.MakimaTextSecondary
 
 @Composable
 fun WorkflowsScreen(
@@ -77,8 +77,8 @@ fun WorkflowsScreen(
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-                border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+                colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
             ) {
                 Row(
                     modifier = Modifier.padding(16.dp),
@@ -89,19 +89,19 @@ fun WorkflowsScreen(
                         Text(
                             text = "WORKFLOW AUTOMATION ENGINE",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisTextPrimary,
+                            color = MakimaTextPrimary,
                             fontSize = 14.sp
                         )
                         Text(
                             text = "Create, save & run autonomous multi-app pipelines",
-                            color = JarvisTextSecondary,
+                            color = MakimaTextSecondary,
                             fontSize = 12.sp
                         )
                     }
 
                     Button(
                         onClick = { showBuilder = !showBuilder },
-                        colors = ButtonDefaults.buttonColors(containerColor = JarvisCyan, contentColor = Color.Black),
+                        colors = ButtonDefaults.buttonColors(containerColor = MakimaCrimson, contentColor = Color.White),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.testTag("create_workflow_button")
                     ) {
@@ -119,14 +119,14 @@ fun WorkflowsScreen(
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = JarvisSurfaceElevated),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, JarvisCyan)
+                    colors = CardDefaults.cardColors(containerColor = MakimaSurfaceElevated),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MakimaCrimson)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Text(
                             text = "BUILD CUSTOM WORKFLOW",
                             fontWeight = FontWeight.Bold,
-                            color = JarvisCyan,
+                            color = MakimaCrimson,
                             fontSize = 13.sp
                         )
 
@@ -138,9 +138,9 @@ fun WorkflowsScreen(
                             label = { Text("Workflow Name", fontSize = 12.sp) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = JarvisCyan,
-                                unfocusedBorderColor = JarvisBorderGlow,
-                                focusedTextColor = JarvisTextPrimary
+                                focusedBorderColor = MakimaCrimson,
+                                unfocusedBorderColor = MakimaBorderGlow,
+                                focusedTextColor = MakimaTextPrimary
                             )
                         )
 
@@ -152,9 +152,9 @@ fun WorkflowsScreen(
                             label = { Text("Description", fontSize = 12.sp) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = JarvisCyan,
-                                unfocusedBorderColor = JarvisBorderGlow,
-                                focusedTextColor = JarvisTextPrimary
+                                focusedBorderColor = MakimaCrimson,
+                                unfocusedBorderColor = MakimaBorderGlow,
+                                focusedTextColor = MakimaTextPrimary
                             )
                         )
 
@@ -166,9 +166,9 @@ fun WorkflowsScreen(
                             label = { Text("Agent Natural Language Command", fontSize = 12.sp) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = JarvisCyan,
-                                unfocusedBorderColor = JarvisBorderGlow,
-                                focusedTextColor = JarvisTextPrimary
+                                focusedBorderColor = MakimaCrimson,
+                                unfocusedBorderColor = MakimaBorderGlow,
+                                focusedTextColor = MakimaTextPrimary
                             ),
                             minLines = 2
                         )
@@ -186,7 +186,7 @@ fun WorkflowsScreen(
                                 }
                             },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = JarvisCyan, contentColor = Color.Black),
+                            colors = ButtonDefaults.buttonColors(containerColor = MakimaCrimson, contentColor = Color.White),
                             shape = RoundedCornerShape(12.dp)
                         ) {
                             Text("Save Workflow to Memory", fontWeight = FontWeight.Bold)
@@ -216,8 +216,8 @@ private fun WorkflowCardItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = JarvisSurfaceDark),
-        border = androidx.compose.foundation.BorderStroke(1.dp, JarvisBorderGlow)
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -229,28 +229,28 @@ private fun WorkflowCardItem(
                     Text(
                         text = workflow.title,
                         fontWeight = FontWeight.Bold,
-                        color = JarvisTextPrimary,
+                        color = MakimaTextPrimary,
                         fontSize = 14.sp
                     )
                     Text(
                         text = workflow.description,
-                        color = JarvisTextSecondary,
+                        color = MakimaTextSecondary,
                         fontSize = 12.sp
                     )
                 }
 
                 Row {
                     IconButton(onClick = onDelete) {
-                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", tint = JarvisStatusRed)
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete", tint = MakimaStatusRed)
                     }
 
                     IconButton(
                         onClick = onRun,
                         modifier = Modifier
                             .clip(RoundedCornerShape(10.dp))
-                            .background(JarvisCyan)
+                            .background(MakimaCrimson)
                     ) {
-                        Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Run", tint = Color.Black)
+                        Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Run", tint = Color.White)
                     }
                 }
             }
@@ -261,13 +261,13 @@ private fun WorkflowCardItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
-                    .background(JarvisSurfaceElevated)
+                    .background(MakimaSurfaceElevated)
                     .padding(8.dp)
             ) {
                 Text(
                     text = "Prompt: \"${workflow.promptCommand}\"",
                     fontSize = 11.sp,
-                    color = JarvisCyan
+                    color = MakimaCrimson
                 )
             }
         }

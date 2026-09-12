@@ -22,6 +22,6 @@ dependencyResolutionManagement {
   }
 }
 
-rootProject.name = "JARVIS Agent"
+rootProject.name = "Makima Agent"
 
 include(":app")

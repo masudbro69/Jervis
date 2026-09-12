@@ -70,7 +70,7 @@ class AutomationEngine(
             else -> selectedModel
         }
         _executionLogs.value = listOf(
-            "🚀 JARVIS AI Agent OS initialized for command: \"$command\"",
+            "🚀 Makima AI Agent OS initialized for command: \"$command\"",
             "🤖 Active Model Engine: $modelLabel ($openCodeZenBaseUrl)"
         )
 
