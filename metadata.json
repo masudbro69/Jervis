@@ -1,0 +1,6 @@
+{
+  "name": "Makima AI Agent OS",
+  "description": "Autonomous Android AI Agent OS leveraging Vision AI, Reasoning, Accessibility Engine, Memory, and Modular App Plugins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
