@@ -4,6 +4,8 @@ import com.example.agent.models.AIThought
 import com.example.agent.models.AgentAction
 import com.example.agent.models.ExecutionState
 import com.example.agent.models.ScreenFrame
+import com.example.agent.models.VoiceCommand
+import com.example.agent.models.VoiceCommandType
 import com.example.agent.models.WorkflowStep
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +56,44 @@ class AutomationEngine(
     var openCodeZenApiKey: String = "zen_free_open_key_demo"
     var openCodeZenBaseUrl: String = "https://api.opencode.zen/v1"
 
+    // ── Voice Command Handler ────────────────────────────────────
+    fun handleVoiceCommand(command: VoiceCommand) {
+        when (command.type) {
+            VoiceCommandType.SYSTEM_ACTION -> {
+                scope.launch {
+                    addLog("🎙️ Voice: System action → ${command.action}")
+                    accessibilityAgent.executeAction(
+                        AgentAction(type = command.action, description = "Voice: ${command.rawText}")
+                    )
+                }
+            }
+            VoiceCommandType.LAUNCH_APP -> {
+                addLog("🎙️ Voice: Launching ${command.targetApp}")
+                runCommand("Open ${command.targetApp}")
+            }
+            VoiceCommandType.TYPE_TEXT -> {
+                scope.launch {
+                    addLog("🎙️ Voice: Typing '${command.inputText}'")
+                    accessibilityAgent.executeAction(
+                        AgentAction(type = command.action, inputText = command.inputText, description = "Voice type: ${command.inputText}")
+                    )
+                }
+            }
+            VoiceCommandType.STOP_EXECUTION -> stop()
+            VoiceCommandType.PAUSE_EXECUTION -> pause()
+            VoiceCommandType.RESUME_EXECUTION -> resume()
+            VoiceCommandType.AI_COMMAND -> {
+                addLog("🎙️ Voice: Sending to AI planner → \"${command.rawText}\"")
+                runCommand(command.rawText)
+            }
+            else -> {
+                addLog("🎙️ Voice: Processing → ${command.rawText}")
+                runCommand(command.rawText)
+            }
+        }
+    }
+
+    // ── Main Command Runner ──────────────────────────────────────
     fun runCommand(command: String) {
         if (command.isBlank()) return
         executionJob?.cancel()
@@ -102,19 +142,16 @@ class AutomationEngine(
                 _currentStepIndex.value = index
                 _executionState.value = ExecutionState.REASONING
 
-                // Update steps UI status
                 _activeSteps.value = _activeSteps.value.mapIndexed { idx, s ->
                     s.copy(isCurrent = (idx == index))
                 }
 
                 addLog("📍 Step ${index + 1}/${steps.size}: ${step.title} (${step.appName})")
 
-                // Vision observation
                 val screenFrame = visionAgent.generateSimulatedScreen(step)
                 _currentScreen.value = screenFrame
                 delay(600)
 
-                // Reasoning
                 val (thought, action) = reasoningAgent.determineNextAction(step, screenFrame)
                 addThought(thought)
                 addLog("🔍 Vision AI: Observed UI node '${step.expectedTargetText ?: step.appName}'. Reasoning: ${thought.reasoning.take(90)}...")
@@ -122,11 +159,9 @@ class AutomationEngine(
                 _executionState.value = ExecutionState.EXECUTING
                 delay(400)
 
-                // Action Execution
                 addLog("⚡ Executing Action: ${action.description}")
                 accessibilityAgent.executeAction(action)
 
-                // Mark step completed
                 _activeSteps.value = _activeSteps.value.mapIndexed { idx, s ->
                     if (idx == index) s.copy(isCompleted = true, isCurrent = false) else s
                 }
@@ -147,7 +182,6 @@ class AutomationEngine(
                 )
             )
 
-            // Save to Room memory
             memoryAgent?.recordWorkflowRun(
                 command = command,
                 workflowName = steps.firstOrNull()?.title ?: "Custom Workflow",

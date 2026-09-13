@@ -22,7 +22,15 @@ enum class ActionType {
     TRANSLATE_TEXT,
     ADD_SUBTITLES,
     UPLOAD_MEDIA,
-    DELAY
+    DELAY,
+    SCREENSHOT,
+    LOCK_SCREEN,
+    NOTIFICATION,
+    VOLUME_UP,
+    VOLUME_DOWN,
+    MUTE,
+    BRIGHTNESS_UP,
+    BRIGHTNESS_DOWN
 }
 
 data class UINode(
@@ -107,4 +115,56 @@ data class AppPermissionStatus(
     val name: String,
     val isGranted: Boolean,
     val description: String
+)
+
+// ── Voice Command Models ─────────────────────────────────────────
+
+enum class VoiceCommandType {
+    SYSTEM_ACTION,      // back, home, recents
+    LAUNCH_APP,         // open <app>
+    TYPE_TEXT,           // type <text>
+    TAP_ELEMENT,        // tap <element>
+    SCROLL,             // scroll up/down
+    TAKE_SCREENSHOT,    // screenshot
+    READ_SCREEN,        // read screen
+    MEDIA_CONTROL,      // play/pause/next
+    VOLUME_CONTROL,     // volume up/down/mute
+    BRIGHTNESS_CONTROL, // brightness
+    READ_NOTIFICATIONS, // notifications
+    SAVE_WORKFLOW,      // save workflow
+    STOP_EXECUTION,     // stop
+    PAUSE_EXECUTION,    // pause
+    RESUME_EXECUTION,   // resume
+    AI_COMMAND          // fallback to AI planner
+}
+
+data class VoiceCommand(
+    val type: VoiceCommandType,
+    val action: ActionType,
+    val rawText: String,
+    val targetApp: String? = null,
+    val inputText: String? = null,
+    val targetElement: String? = null
+)
+
+// ── Multitask Models ─────────────────────────────────────────────
+
+enum class TaskStatus {
+    QUEUED,
+    RUNNING,
+    COMPLETED,
+    FAILED,
+    CANCELLED
+}
+
+data class TaskSlot(
+    val id: String,
+    val name: String,
+    val command: String,
+    val status: TaskStatus,
+    val progress: Float = 0f,
+    val priority: Int = 0,
+    val error: String? = null,
+    val startedAt: Long = System.currentTimeMillis(),
+    val completedAt: Long? = null
 )

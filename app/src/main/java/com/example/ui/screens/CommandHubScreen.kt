@@ -1,6 +1,15 @@
 package com.example.ui.screens
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,13 +30,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -51,6 +62,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.agent.models.ExecutionState
+import com.example.agent.models.TaskSlot
+import com.example.agent.models.TaskStatus
 import com.example.agent.models.WorkflowStep
 import com.example.ui.MainViewModel
 import com.example.ui.components.LogItemView
@@ -59,11 +72,15 @@ import com.example.ui.components.ScreenPreviewCard
 import com.example.ui.theme.MakimaBorderGlow
 import com.example.ui.theme.MakimaCrimson
 import com.example.ui.theme.MakimaDarkRed
+import com.example.ui.theme.MakimaGold
 import com.example.ui.theme.MakimaStatusGreen
+import com.example.ui.theme.MakimaStatusOrange
+import com.example.ui.theme.MakimaStatusRed
 import com.example.ui.theme.MakimaSurfaceDark
 import com.example.ui.theme.MakimaSurfaceElevated
 import com.example.ui.theme.MakimaTextPrimary
 import com.example.ui.theme.MakimaTextSecondary
+import kotlin.math.sin
 
 @Composable
 fun CommandHubScreen(
@@ -77,7 +94,16 @@ fun CommandHubScreen(
     val currentStepIndex by viewModel.currentStepIndex.collectAsState()
     val screenFrame by viewModel.automationEngine.currentScreen.collectAsState()
 
-    var isListeningVoice by remember { mutableStateOf(false) }
+    // Voice state
+    val isListening by viewModel.isListening.collectAsState()
+    val isWakeWordActive by viewModel.isWakeWordActive.collectAsState()
+    val partialText by viewModel.partialVoiceText.collectAsState()
+    val voiceAmplitude by viewModel.voiceAmplitude.collectAsState()
+    val isSpeaking by viewModel.isSpeaking.collectAsState()
+
+    // Multitask state
+    val taskSlots by viewModel.taskSlots.collectAsState()
+    val activeTaskCount by viewModel.activeTaskCount.collectAsState()
 
     LazyColumn(
         modifier = modifier
@@ -86,11 +112,22 @@ fun CommandHubScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // 3D Animated Makima Character Panel
+        item { MakimaCharacterPanel() }
+
+        // ── Voice Waveform Bar ───────────────────────────────────
         item {
-            MakimaCharacterPanel()
+            VoiceWaveformBar(
+                isListening = isListening,
+                isWakeWordActive = isWakeWordActive,
+                isSpeaking = isSpeaking,
+                amplitude = voiceAmplitude,
+                partialText = partialText,
+                onToggleListening = { viewModel.toggleVoiceListening() },
+                onToggleWakeWord = { viewModel.toggleWakeWordMode() }
+            )
         }
 
-        // Express Command Input Card
+        // ── Command Input Card ───────────────────────────────────
         item {
             Card(
                 modifier = Modifier
@@ -151,33 +188,32 @@ fun CommandHubScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "One command. Autonomous execution.",
+                            text = if (isListening) "🎙️ Listening..." else "One command. Autonomous execution.",
                             fontSize = 11.sp,
-                            color = MakimaTextSecondary
+                            color = if (isListening) MakimaCrimson else MakimaTextSecondary
                         )
 
                         Row(verticalAlignment = Alignment.CenterVertically) {
+                            // Mic button
                             IconButton(
                                 onClick = {
-                                    isListeningVoice = !isListeningVoice
-                                    if (isListeningVoice) {
-                                        commandInput = "Open WhatsApp and send message to Mom saying I am on my way"
-                                    }
+                                    viewModel.toggleVoiceListening()
                                 },
                                 modifier = Modifier
                                     .padding(end = 8.dp)
                                     .clip(CircleShape)
-                                    .background(if (isListeningVoice) Color.Red else MakimaSurfaceElevated)
-                                    .border(1.dp, if (isListeningVoice) Color.Red else MakimaCrimson, CircleShape)
+                                    .background(if (isListening) MakimaCrimson else MakimaSurfaceElevated)
+                                    .border(1.dp, if (isListening) MakimaCrimson else MakimaBorderGlow, CircleShape)
                             ) {
                                 Icon(
-                                    imageVector = if (isListeningVoice) Icons.Default.MicOff else Icons.Default.Mic,
+                                    imageVector = if (isListening) Icons.Default.MicOff else Icons.Default.Mic,
                                     contentDescription = "Voice Input",
-                                    tint = if (isListeningVoice) Color.White else MakimaCrimson,
+                                    tint = if (isListening) Color.White else MakimaCrimson,
                                     modifier = Modifier.size(18.dp)
                                 )
                             }
 
+                            // Execute button
                             IconButton(
                                 onClick = {
                                     if (commandInput.isNotBlank()) {
@@ -212,7 +248,20 @@ fun CommandHubScreen(
             }
         }
 
-        // Quick Preset Workflows
+        // ── Multitask Panel ──────────────────────────────────────
+        if (taskSlots.isNotEmpty()) {
+            item {
+                MultitaskPanel(
+                    taskSlots = taskSlots,
+                    activeCount = activeTaskCount,
+                    onCancelTask = { viewModel.cancelTask(it) },
+                    onCancelAll = { viewModel.cancelAllTasks() },
+                    onClearFinished = { viewModel.clearFinishedTasks() }
+                )
+            }
+        }
+
+        // ── Quick Preset Workflows ───────────────────────────────
         item {
             Text(
                 text = "FEATURED PIPELINES",
@@ -222,7 +271,6 @@ fun CommandHubScreen(
                 letterSpacing = 1.sp
             )
             Spacer(modifier = Modifier.height(8.dp))
-
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 QuickCommandCard(
                     title = "Rednote to Hindi YouTube Short",
@@ -243,12 +291,10 @@ fun CommandHubScreen(
             }
         }
 
-        // Live Device Screen & Vision AI
-        item {
-            ScreenPreviewCard(screenFrame = screenFrame)
-        }
+        // ── Live Screen Preview ──────────────────────────────────
+        item { ScreenPreviewCard(screenFrame = screenFrame) }
 
-        // Active Workflow Steps Pipeline Progress
+        // ── Active Pipeline ──────────────────────────────────────
         if (activeSteps.isNotEmpty()) {
             item {
                 Card(
@@ -276,22 +322,15 @@ fun CommandHubScreen(
                                 fontSize = 12.sp
                             )
                         }
-
                         Spacer(modifier = Modifier.height(8.dp))
-
                         val progress = if (activeSteps.isEmpty()) 0f else (currentStepIndex + 1).toFloat() / activeSteps.size
                         LinearProgressIndicator(
                             progress = progress,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(6.dp)
-                                .clip(RoundedCornerShape(3.dp)),
+                            modifier = Modifier.fillMaxWidth().height(6.dp).clip(RoundedCornerShape(3.dp)),
                             color = MakimaCrimson,
                             trackColor = MakimaSurfaceElevated
                         )
-
                         Spacer(modifier = Modifier.height(12.dp))
-
                         activeSteps.forEach { step ->
                             PipelineStepRow(step = step)
                             Spacer(modifier = Modifier.height(6.dp))
@@ -301,7 +340,7 @@ fun CommandHubScreen(
             }
         }
 
-        // Live Execution Logs
+        // ── Execution Logs ───────────────────────────────────────
         item {
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -317,13 +356,8 @@ fun CommandHubScreen(
                         fontSize = 13.sp,
                         modifier = Modifier.padding(bottom = 10.dp)
                     )
-
                     if (logs.isEmpty()) {
-                        Text(
-                            text = "Waiting for agent command...",
-                            color = MakimaTextSecondary,
-                            fontSize = 12.sp
-                        )
+                        Text("Waiting for agent command...", color = MakimaTextSecondary, fontSize = 12.sp)
                     } else {
                         logs.takeLast(6).forEach { logMsg ->
                             LogItemView(logMessage = logMsg)
@@ -336,16 +370,244 @@ fun CommandHubScreen(
     }
 }
 
+// ── Voice Waveform Bar ───────────────────────────────────────────
 @Composable
-private fun QuickCommandCard(
-    title: String,
-    subtitle: String,
-    onClick: () -> Unit
+private fun VoiceWaveformBar(
+    isListening: Boolean,
+    isWakeWordActive: Boolean,
+    isSpeaking: Boolean,
+    amplitude: Float,
+    partialText: String,
+    onToggleListening: () -> Unit,
+    onToggleWakeWord: () -> Unit
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "waveform")
+    val wavePhase by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 6.2832f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2000),
+            repeatMode = RepeatMode.Restart
+        ),
+        label = "wavePhase"
+    )
+
+    AnimatedVisibility(visible = isListening || isWakeWordActive || isSpeaking) {
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+            border = androidx.compose.foundation.BorderStroke(
+                1.dp,
+                if (isListening) MakimaCrimson else MakimaBorderGlow
+            )
+        ) {
+            Column(modifier = Modifier.padding(12.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(10.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    if (isListening) MakimaCrimson
+                                    else if (isSpeaking) MakimaGold
+                                    else MakimaStatusGreen
+                                )
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = when {
+                                isSpeaking -> "🔊 Makima Speaking..."
+                                isListening -> "🎙️ Listening..."
+                                isWakeWordActive -> "👁️ Wake Word Active — Say \"Hey Makima\""
+                                else -> ""
+                            },
+                            color = MakimaTextPrimary,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    Row {
+                        IconButton(onClick = onToggleWakeWord, modifier = Modifier.size(28.dp)) {
+                            Icon(
+                                imageVector = Icons.Default.VolumeUp,
+                                contentDescription = "Wake Word",
+                                tint = if (isWakeWordActive) MakimaGold else MakimaTextSecondary,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                }
+
+                // Waveform visualization
+                Spacer(modifier = Modifier.height(8.dp))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MakimaSurfaceElevated),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        val w = size.width
+                        val h = size.height
+                        val centerY = h / 2
+                        val barCount = 40
+                        val barWidth = w / barCount
+                        val effectiveAmp = if (isListening) amplitude else if (isSpeaking) 0.5f else 0.1f
+
+                        for (i in 0 until barCount) {
+                            val x = i * barWidth + barWidth / 2
+                            val wave = sin(wavePhase + i * 0.3).toFloat()
+                            val barHeight = (h * 0.15f + h * 0.35f * effectiveAmp * (0.5f + 0.5f * wave)).coerceIn(2f, h * 0.9f)
+
+                            drawRect(
+                                color = if (isListening) MakimaCrimson.copy(alpha = 0.6f + 0.4f * effectiveAmp)
+                                else MakimaGold.copy(alpha = 0.4f + 0.3f * effectiveAmp),
+                                topLeft = androidx.compose.ui.geometry.Offset(x - 2f, centerY - barHeight / 2),
+                                size = androidx.compose.ui.geometry.Size(4f, barHeight)
+                            )
+                        }
+                    }
+                }
+
+                // Partial text
+                if (partialText.isNotEmpty()) {
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = "\"$partialText\"",
+                        color = MakimaCrimson,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        }
+    }
+}
+
+// ── Multitask Panel ──────────────────────────────────────────────
+@Composable
+private fun MultitaskPanel(
+    taskSlots: List<TaskSlot>,
+    activeCount: Int,
+    onCancelTask: (String) -> Unit,
+    onCancelAll: () -> Unit,
+    onClearFinished: () -> Unit
 ) {
     Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MakimaSurfaceDark),
+        border = androidx.compose.foundation.BorderStroke(1.dp, MakimaGold.copy(alpha = 0.5f))
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "MULTITASK QUEUE",
+                        fontWeight = FontWeight.Bold,
+                        color = MakimaTextPrimary,
+                        fontSize = 13.sp
+                    )
+                    Text(
+                        text = "$activeCount active / ${taskSlots.size} total",
+                        color = MakimaTextSecondary,
+                        fontSize = 11.sp
+                    )
+                }
+                Row {
+                    IconButton(onClick = onClearFinished, modifier = Modifier.size(28.dp)) {
+                        Icon(Icons.Default.CheckCircle, "Clear", tint = MakimaStatusGreen, modifier = Modifier.size(18.dp))
+                    }
+                    IconButton(onClick = onCancelAll, modifier = Modifier.size(28.dp)) {
+                        Icon(Icons.Default.Cancel, "Cancel All", tint = MakimaStatusRed, modifier = Modifier.size(18.dp))
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            taskSlots.forEach { task ->
+                TaskSlotRow(task = task, onCancel = { onCancelTask(task.id) })
+                Spacer(modifier = Modifier.height(6.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun TaskSlotRow(task: TaskSlot, onCancel: () -> Unit) {
+    val statusColor = when (task.status) {
+        TaskStatus.RUNNING -> MakimaCrimson
+        TaskStatus.COMPLETED -> MakimaStatusGreen
+        TaskStatus.FAILED -> MakimaStatusRed
+        TaskStatus.CANCELLED -> MakimaTextSecondary
+        TaskStatus.QUEUED -> MakimaStatusOrange
+    }
+
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() },
+            .clip(RoundedCornerShape(10.dp))
+            .background(MakimaSurfaceElevated)
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(statusColor)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = task.name,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
+                    color = MakimaTextPrimary
+                )
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = task.status.name,
+                    fontSize = 10.sp,
+                    color = statusColor,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            if (task.status == TaskStatus.RUNNING) {
+                Spacer(modifier = Modifier.height(4.dp))
+                LinearProgressIndicator(
+                    progress = { task.progress },
+                    modifier = Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(2.dp)),
+                    color = MakimaCrimson,
+                    trackColor = MakimaBorderGlow
+                )
+            }
+        }
+        if (task.status == TaskStatus.RUNNING || task.status == TaskStatus.QUEUED) {
+            IconButton(onClick = onCancel, modifier = Modifier.size(24.dp)) {
+                Icon(Icons.Default.Stop, "Cancel", tint = MakimaStatusRed, modifier = Modifier.size(16.dp))
+            }
+        }
+    }
+}
+
+// ── Quick Command Card ───────────────────────────────────────────
+@Composable
+private fun QuickCommandCard(title: String, subtitle: String, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().clickable { onClick() },
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = MakimaSurfaceElevated),
         border = androidx.compose.foundation.BorderStroke(1.dp, MakimaBorderGlow)
@@ -356,28 +618,15 @@ private fun QuickCommandCard(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = title,
-                    fontWeight = FontWeight.Bold,
-                    color = MakimaTextPrimary,
-                    fontSize = 13.sp
-                )
-                Text(
-                    text = subtitle,
-                    color = MakimaTextSecondary,
-                    fontSize = 11.sp
-                )
+                Text(title, fontWeight = FontWeight.Bold, color = MakimaTextPrimary, fontSize = 13.sp)
+                Text(subtitle, color = MakimaTextSecondary, fontSize = 11.sp)
             }
-            Icon(
-                imageVector = Icons.Default.PlayArrow,
-                contentDescription = null,
-                tint = MakimaCrimson,
-                modifier = Modifier.size(20.dp)
-            )
+            Icon(Icons.Default.PlayArrow, null, tint = MakimaCrimson, modifier = Modifier.size(20.dp))
         }
     }
 }
 
+// ── Pipeline Step Row ────────────────────────────────────────────
 @Composable
 private fun PipelineStepRow(step: WorkflowStep) {
     Row(
@@ -386,11 +635,7 @@ private fun PipelineStepRow(step: WorkflowStep) {
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .background(if (step.isCurrent) MakimaCrimson.copy(alpha = 0.15f) else MakimaSurfaceElevated)
-            .border(
-                1.dp,
-                if (step.isCurrent) MakimaCrimson else Color.Transparent,
-                RoundedCornerShape(10.dp)
-            )
+            .border(1.dp, if (step.isCurrent) MakimaCrimson else Color.Transparent, RoundedCornerShape(10.dp))
             .padding(10.dp)
     ) {
         Icon(
@@ -407,11 +652,7 @@ private fun PipelineStepRow(step: WorkflowStep) {
                 fontSize = 12.sp,
                 color = if (step.isCurrent) MakimaCrimson else MakimaTextPrimary
             )
-            Text(
-                text = "${step.appName} • ${step.description}",
-                fontSize = 11.sp,
-                color = MakimaTextSecondary
-            )
+            Text("${step.appName} • ${step.description}", fontSize = 11.sp, color = MakimaTextSecondary)
         }
     }
 }
