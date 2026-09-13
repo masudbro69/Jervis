@@ -177,7 +177,7 @@ class PlannerAgent {
 
     private suspend fun generateDynamicPlan(userPrompt: String): List<WorkflowStep> {
         val systemPrompt = "You are Makima AI Agent OS Planner. Break down the user prompt into 3 to 5 discrete executable Android automation steps. Return brief clear descriptions."
-        val aiAdvice = GeminiNetwork.askGemini(userPrompt, systemPrompt)
+        val aiAdvice = GeminiNetwork.askAI(userPrompt, systemPrompt)
 
         return listOf(
             WorkflowStep(

@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.example.data.network.GeminiNetwork
 import com.example.ui.JarvisMainApp
 import com.example.ui.MainViewModel
 import com.example.ui.theme.MyApplicationTheme
@@ -30,7 +31,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // Initialize the API network manager with app context
+        GeminiNetwork.init(applicationContext)
+
         requestAudioPermission()
+
         setContent {
             MyApplicationTheme {
                 JarvisMainApp(viewModel = viewModel)
